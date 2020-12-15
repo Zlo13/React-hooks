@@ -1,14 +1,13 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import TodoList from "./TodoList";
 
 
 export default function App () {
 
   const [todos, setTodos] = useState([
-    {id: 1, title: 'First todo', completed: false},
-    {id: 2, title: 'Second todo', completed: true},
+    // {id: 1, title: 'First todo', completed: false},
+    // {id: 2, title: 'Second todo', completed: true},
   ])
-
   const [todoTitle, setTodoTitle] = useState('')
 
   const addTodo = event => {
@@ -24,6 +23,15 @@ export default function App () {
       setTodoTitle('')
     }
   }
+
+  useEffect(() => {
+    const row = localStorage.getItem('todos') || []
+    setTodos(JSON.parse(row))
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos))
+  }, [todos])
 
   return (
     <div className="container">
